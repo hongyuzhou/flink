@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class HllBenchMark{
+public class WindowHllBenchMark{
 
-    private static final Logger LOG = LoggerFactory.getLogger(HllBenchMark.class);
+    private static final Logger LOG = LoggerFactory.getLogger(WindowHllBenchMark.class);
 
     public static void main(String[] args) throws Exception {
 
