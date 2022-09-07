@@ -95,6 +95,11 @@ under the License.
 			<scope>test</scope>
 			<type>test-jar</type>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.datasketches</groupId>
+			<artifactId>datasketches-java</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -196,6 +196,8 @@ under the License.
 		<!-- Can be set to any value to reproduce a specific build. -->
 		<test.randomization.seed/>
 		<test.unit.pattern>**/*Test.*</test.unit.pattern>
+		<!-- Apache DataSketches 3.3.0 -->
+		<datasketches.version>3.3.0</datasketches.version>
 	</properties>
 
 	<dependencies>
@@ -871,6 +873,22 @@ under the License.
 				<artifactId>archunit-junit5</artifactId>
 				<version>${archunit.version}</version>
 				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.datasketches</groupId>
+				<artifactId>datasketches-java</artifactId>
+				<version>${datasketches.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-log4j12</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 
 		</dependencies>

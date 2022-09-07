@@ -18,6 +18,8 @@
 
 package org.apache.flink.streaming.api.datastream;
 
+import org.apache.datasketches.hll.TgtHllType;
+
 import org.apache.flink.annotation.Internal;
 import org.apache.flink.annotation.Public;
 import org.apache.flink.annotation.PublicEvolving;
@@ -31,6 +33,8 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.aggregation.AggregationFunction;
 import org.apache.flink.streaming.api.functions.aggregation.ComparableAggregator;
 import org.apache.flink.streaming.api.functions.aggregation.SumAggregator;
+import org.apache.flink.streaming.api.functions.sketch.CpcAccumulator;
+import org.apache.flink.streaming.api.functions.sketch.HllAccumulator;
 import org.apache.flink.streaming.api.functions.windowing.PassThroughWindowFunction;
 import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
 import org.apache.flink.streaming.api.functions.windowing.WindowFunction;
@@ -299,6 +303,25 @@ public class WindowedStream<T, K, W extends Window> {
                         function, input.getType(), null, false);
 
         return aggregate(function, accumulatorType, resultType);
+    }
+    @PublicEvolving
+    public SingleOutputStreamOperator<Double> hll(int positionToSum) {
+        return aggregate(new HllAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig()));
+    }
+
+    @PublicEvolving
+    public SingleOutputStreamOperator<Double> hll(int positionToSum, int lgConfigK, TgtHllType tgtHllType) {
+        return aggregate(new HllAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig(), lgConfigK, tgtHllType));
+    }
+
+    @PublicEvolving
+    public SingleOutputStreamOperator<Double> cpc(int positionToSum) {
+        return aggregate(new CpcAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig()));
+    }
+
+    @PublicEvolving
+    public SingleOutputStreamOperator<Double> cpc(int positionToSum,int lgk, long seed) {
+        return aggregate(new CpcAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig(), lgk ,seed));
     }
 
     /**

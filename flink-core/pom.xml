@@ -128,6 +128,10 @@ under the License.
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.datasketches</groupId>
+			<artifactId>datasketches-java</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
