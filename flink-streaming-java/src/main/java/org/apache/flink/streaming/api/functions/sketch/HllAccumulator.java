@@ -1,6 +1,7 @@
 package org.apache.flink.streaming.api.functions.sketch;
 
 
+import org.apache.datasketches.SketchesArgumentException;
 import org.apache.datasketches.hll.HllSketch;
 
 import org.apache.datasketches.hll.TgtHllType;
@@ -25,6 +26,9 @@ public class HllAccumulator<IN> extends SketchAggregateFunction<IN, HllSketch, D
     private final FieldAccessor<IN, Object> fieldAccessor;
     private final HllFunction adder;
 
+    final int MIN_LOG_K = 4;
+    final int MAX_LOG_K = 21;
+
     public HllAccumulator(int pos, TypeInformation<IN> typeInfo, ExecutionConfig config) {
         fieldAccessor = FieldAccessorFactory.getAccessor(typeInfo, pos, config);
         adder = HllFunction.getForClass(fieldAccessor.getFieldType().getTypeClass());
@@ -40,7 +44,10 @@ public class HllAccumulator<IN> extends SketchAggregateFunction<IN, HllSketch, D
             TgtHllType tgtHllType) {
         fieldAccessor = FieldAccessorFactory.getAccessor(typeInfo, pos, config);
         adder = HllFunction.getForClass(fieldAccessor.getFieldType().getTypeClass());
-        // TODO: lgConfigK 和 tgtHllType参数校验
+        if ((lgConfigK >= MIN_LOG_K) && (lgConfigK <= MAX_LOG_K)) {
+            throw new SketchesArgumentException(
+                    "Log K must be between 4 and 21, inclusive: " + lgConfigK);
+        }
         this.lgConfigK = lgConfigK;
         this.tgtHllType = tgtHllType;
     }
