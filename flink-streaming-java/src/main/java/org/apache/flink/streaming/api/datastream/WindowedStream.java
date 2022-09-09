@@ -304,6 +304,7 @@ public class WindowedStream<T, K, W extends Window> {
 
         return aggregate(function, accumulatorType, resultType);
     }
+
     @PublicEvolving
     public SingleOutputStreamOperator<Double> hll(int positionToSum) {
         return aggregate(new HllAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig()));
