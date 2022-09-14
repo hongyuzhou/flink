@@ -22,11 +22,11 @@ public class CpcAccumulator<IN> extends SketchAggregateFunction<IN, CpcSketch, D
     private final int lgK;
     private final long seed;
     private final FieldAccessor<IN, Object> fieldAccessor;
-    private final CpcFunction adder;
+    private final CpcFunction updater;
 
     public CpcAccumulator(int pos, TypeInformation<IN> typeInfo, ExecutionConfig config) {
         fieldAccessor = FieldAccessorFactory.getAccessor(typeInfo, pos, config);
-        adder = CpcFunction.getForClass(fieldAccessor.getFieldType().getTypeClass());
+        updater = CpcFunction.getForClass(fieldAccessor.getFieldType().getTypeClass());
         this.lgK = DEFAULT_LG_K;
         this.seed = DEFAULT_UPDATE_SEED;
     }
@@ -38,7 +38,7 @@ public class CpcAccumulator<IN> extends SketchAggregateFunction<IN, CpcSketch, D
             int lgK,
             long seed) {
         fieldAccessor = FieldAccessorFactory.getAccessor(typeInfo, pos, config);
-        adder = CpcFunction.getForClass(fieldAccessor.getFieldType().getTypeClass());
+        updater = CpcFunction.getForClass(fieldAccessor.getFieldType().getTypeClass());
         // TODO: lgConfigK 和 tgtHllType参数校验
         this.lgK = lgK;
         this.seed = seed;
@@ -51,7 +51,7 @@ public class CpcAccumulator<IN> extends SketchAggregateFunction<IN, CpcSketch, D
 
     @Override
     public CpcSketch add(IN value, CpcSketch accumulator) {
-        adder.add(accumulator, fieldAccessor.get(value));
+        updater.update(accumulator, fieldAccessor.get(value));
         return accumulator;
     }
 

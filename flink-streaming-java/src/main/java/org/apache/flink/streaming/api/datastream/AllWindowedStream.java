@@ -487,6 +487,26 @@ public class AllWindowedStream<T, W extends Window> {
     //  AggregateFunction
     // ------------------------------------------------------------------------
 
+    @PublicEvolving
+    public SingleOutputStreamOperator<Double> hll(int positionToSum) {
+        return aggregate(new HllAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig()));
+    }
+
+    @PublicEvolving
+    public SingleOutputStreamOperator<Double> hll(int positionToSum, int lgConfigK, TgtHllType tgtHllType) {
+        return aggregate(new HllAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig(), lgConfigK, tgtHllType));
+    }
+
+    @PublicEvolving
+    public SingleOutputStreamOperator<Double> cpc(int positionToSum) {
+        return aggregate(new CpcAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig()));
+    }
+
+    @PublicEvolving
+    public SingleOutputStreamOperator<Double> cpc(int positionToSum, int lgk, long seed) {
+        return aggregate(new CpcAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig(), lgk ,seed));
+    }
+
     /**
      * Applies the given {@code AggregateFunction} to each window. The AggregateFunction aggregates
      * all elements of a window into a single result element. The stream of these result elements
@@ -547,26 +567,6 @@ public class AllWindowedStream<T, W extends Window> {
 
         return aggregate(
                 function, new PassThroughAllWindowFunction<W, R>(), accumulatorType, resultType);
-    }
-
-    @PublicEvolving
-    public SingleOutputStreamOperator<Double> hll(int positionToSum) {
-        return aggregate(new HllAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig()));
-    }
-
-    @PublicEvolving
-    public SingleOutputStreamOperator<Double> hll(int positionToSum, int lgConfigK, TgtHllType tgtHllType) {
-        return aggregate(new HllAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig(), lgConfigK, tgtHllType));
-    }
-
-    @PublicEvolving
-    public SingleOutputStreamOperator<Double> cpc(int positionToSum) {
-        return aggregate(new CpcAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig()));
-    }
-
-    @PublicEvolving
-    public SingleOutputStreamOperator<Double> cpc(int positionToSum,int lgk, long seed) {
-        return aggregate(new CpcAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig(), lgk ,seed));
     }
 
     /**

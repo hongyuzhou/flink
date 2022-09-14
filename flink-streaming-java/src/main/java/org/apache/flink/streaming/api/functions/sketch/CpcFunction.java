@@ -30,7 +30,7 @@ public abstract class CpcFunction implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public abstract void add(CpcSketch cpcSketch, Object o);
+    public abstract void update(CpcSketch cpcSketch, Object o);
 
     public static CpcFunction getForClass(Class<?> clazz) {
 
@@ -60,7 +60,7 @@ public abstract class CpcFunction implements Serializable {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void add(CpcSketch cpcSketch, Object o) {
+        public void update(CpcSketch cpcSketch, Object o) {
             cpcSketch.update((long) o);
         }
     }
@@ -70,7 +70,7 @@ public abstract class CpcFunction implements Serializable {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void add(CpcSketch cpcSketch, Object o) {
+        public void update(CpcSketch cpcSketch, Object o) {
             cpcSketch.update((double) o);
         }
     }
@@ -79,7 +79,7 @@ public abstract class CpcFunction implements Serializable {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void add(CpcSketch cpcSketch, Object o) {
+        public void update(CpcSketch cpcSketch, Object o) {
             cpcSketch.update((String) o);
         }
     }
@@ -88,7 +88,7 @@ public abstract class CpcFunction implements Serializable {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void add(CpcSketch cpcSketch, Object o) {
+        public void update(CpcSketch cpcSketch, Object o) {
             cpcSketch.update((int[]) o);
         }
     }
@@ -97,7 +97,7 @@ public abstract class CpcFunction implements Serializable {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void add(CpcSketch cpcSketch, Object o) {
+        public void update(CpcSketch cpcSketch, Object o) {
             cpcSketch.update((long[]) o);
         }
     }
@@ -106,7 +106,7 @@ public abstract class CpcFunction implements Serializable {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void add(CpcSketch cpcSketch, Object o) {
+        public void update(CpcSketch cpcSketch, Object o) {
             cpcSketch.update((char[]) o);
         }
     }
@@ -115,7 +115,7 @@ public abstract class CpcFunction implements Serializable {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void add(CpcSketch cpcSketch, Object o) {
+        public void update(CpcSketch cpcSketch, Object o) {
             cpcSketch.update((byte[]) o);
         }
     }

@@ -31,7 +31,7 @@ public abstract class HllFunction implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public abstract void add(HllSketch hllSketch, Object o);
+    public abstract void update(HllSketch hllSketch, Object o);
 
     public static HllFunction getForClass(Class<?> clazz) {
 
@@ -63,7 +63,7 @@ public abstract class HllFunction implements Serializable {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void add(HllSketch hllSketch, Object o) {
+        public void update(HllSketch hllSketch, Object o) {
             hllSketch.update((long) o);
         }
     }
@@ -73,7 +73,7 @@ public abstract class HllFunction implements Serializable {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void add(HllSketch hllSketch, Object o) {
+        public void update(HllSketch hllSketch, Object o) {
             hllSketch.update((double) o);
         }
     }
@@ -82,7 +82,7 @@ public abstract class HllFunction implements Serializable {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void add(HllSketch hllSketch, Object o) {
+        public void update(HllSketch hllSketch, Object o) {
             hllSketch.update((String) o);
         }
     }
@@ -91,7 +91,7 @@ public abstract class HllFunction implements Serializable {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void add(HllSketch hllSketch, Object o) {
+        public void update(HllSketch hllSketch, Object o) {
             hllSketch.update((ByteBuffer) o);
         }
     }
@@ -100,7 +100,7 @@ public abstract class HllFunction implements Serializable {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void add(HllSketch hllSketch, Object o) {
+        public void update(HllSketch hllSketch, Object o) {
             hllSketch.update((int[]) o);
         }
     }
@@ -109,7 +109,7 @@ public abstract class HllFunction implements Serializable {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void add(HllSketch hllSketch, Object o) {
+        public void update(HllSketch hllSketch, Object o) {
             hllSketch.update((long[]) o);
         }
     }
@@ -118,7 +118,7 @@ public abstract class HllFunction implements Serializable {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void add(HllSketch hllSketch, Object o) {
+        public void update(HllSketch hllSketch, Object o) {
             hllSketch.update((char[]) o);
         }
     }
@@ -127,7 +127,7 @@ public abstract class HllFunction implements Serializable {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void add(HllSketch hllSketch, Object o) {
+        public void update(HllSketch hllSketch, Object o) {
             hllSketch.update((byte[]) o);
         }
     }
