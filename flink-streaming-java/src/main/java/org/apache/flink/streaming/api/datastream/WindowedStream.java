@@ -304,24 +304,29 @@ public class WindowedStream<T, K, W extends Window> {
 
         return aggregate(function, accumulatorType, resultType);
     }
+
     @PublicEvolving
     public SingleOutputStreamOperator<Double> hll(int positionToSum) {
-        return aggregate(new HllAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig()));
+        return aggregate(new HllAccumulator<>(
+                positionToSum, input.getType(), input.getExecutionConfig()));
     }
 
     @PublicEvolving
     public SingleOutputStreamOperator<Double> hll(int positionToSum, int lgConfigK, TgtHllType tgtHllType) {
-        return aggregate(new HllAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig(), lgConfigK, tgtHllType));
+        return aggregate(new HllAccumulator<>(
+                positionToSum, input.getType(), input.getExecutionConfig(), lgConfigK, tgtHllType));
     }
 
     @PublicEvolving
     public SingleOutputStreamOperator<Double> cpc(int positionToSum) {
-        return aggregate(new CpcAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig()));
+        return aggregate(new CpcAccumulator<>(
+                positionToSum, input.getType(), input.getExecutionConfig()));
     }
 
     @PublicEvolving
-    public SingleOutputStreamOperator<Double> cpc(int positionToSum,int lgk, long seed) {
-        return aggregate(new CpcAccumulator<>(positionToSum, input.getType(), input.getExecutionConfig(), lgk ,seed));
+    public SingleOutputStreamOperator<Double> cpc(int positionToSum, int lgk, long seed) {
+        return aggregate(new CpcAccumulator<>(
+                positionToSum, input.getType(), input.getExecutionConfig(), lgk, seed));
     }
 
     /**

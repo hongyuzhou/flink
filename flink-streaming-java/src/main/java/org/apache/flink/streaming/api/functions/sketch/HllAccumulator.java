@@ -24,14 +24,15 @@ public class HllAccumulator<IN> extends SketchAggregateFunction<IN, HllSketch, D
     private final int lgConfigK;
     private final TgtHllType tgtHllType;
     private final FieldAccessor<IN, Object> fieldAccessor;
-    private final HllFunction adder;
+    private final HllFunction updater;
 
     final int MIN_LOG_K = 4;
     final int MAX_LOG_K = 21;
 
     public HllAccumulator(int pos, TypeInformation<IN> typeInfo, ExecutionConfig config) {
         fieldAccessor = FieldAccessorFactory.getAccessor(typeInfo, pos, config);
-        adder = HllFunction.getForClass(fieldAccessor.getFieldType().getTypeClass());
+        updater = HllFunction.getForClass(fieldAccessor.getFieldType().getTypeClass());
+
         this.lgConfigK = DEFAULT_LG_K;
         this.tgtHllType = TgtHllType.HLL_4;
     }
@@ -43,7 +44,8 @@ public class HllAccumulator<IN> extends SketchAggregateFunction<IN, HllSketch, D
             int lgConfigK,
             TgtHllType tgtHllType) {
         fieldAccessor = FieldAccessorFactory.getAccessor(typeInfo, pos, config);
-        adder = HllFunction.getForClass(fieldAccessor.getFieldType().getTypeClass());
+        updater = HllFunction.getForClass(fieldAccessor.getFieldType().getTypeClass());
+
         if ((lgConfigK >= MIN_LOG_K) && (lgConfigK <= MAX_LOG_K)) {
             throw new SketchesArgumentException(
                     "Log K must be between 4 and 21, inclusive: " + lgConfigK);
@@ -59,7 +61,7 @@ public class HllAccumulator<IN> extends SketchAggregateFunction<IN, HllSketch, D
 
     @Override
     public HllSketch add(IN value, HllSketch accumulator) {
-        adder.add(accumulator, fieldAccessor.get(value));
+        updater.update(accumulator, fieldAccessor.get(value));
         return accumulator;
     }
 
